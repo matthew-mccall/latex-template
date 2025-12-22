@@ -5,10 +5,5 @@
 %   • <scale>: optional scaling factor (default 1.0)
 %   • <basename>: path without extension (may be nested, e.g., a/b)
 \newcommand{\embeddot}[2][1.0]{%
-% Build assets only if sources are newer than targets to avoid latexmk loops
-    \immediate\write18{%
-      sh -lc 'scripts/embeddot.sh "#2"'%
-    }%
-% Include the generated PDF
-    \includegraphics[scale=#1]{out/#2.pdf}%
+  \directlua{local m=require("scripts.embeddot"); local pdf=m.build("#2"); if pdf then tex.sprint([[\string\includegraphics[scale=]] .. tostring(#1) .. [[]{]] .. pdf .. [[}]]) end}%
 }
