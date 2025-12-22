@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage[document]{ragged2e}
+\usepackage[letterpaper, margin=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{booktabs} % fancy lines for tables
+\usepackage{caption}
+\usepackage{enumitem} % customize item labels
+\usepackage{endnotes}
+\usepackage{float}    % force figure position to match source
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{pgfplots} % graph functions
+\usepackage{setspace}
+\usepackage{shellesc}
+\usepackage{tabularx} % arbitrary table column widths
+\usepackage{tikz}     % general drawing
+
+\input{config.tex}
+
+\title{Homework 0 \\ \large Course Name \\ Section 0}
+\author{Matthew McCall}
+
+\begin{document}
+
+\maketitle
+\doublespacing{}
+
+\section{Hello World!}
+\lipsum
+
+\section{Graph}
+\embeddot{graphs/example}
+
+\section{Code Example}
+\begin{singlespacing}
+    \begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    printf("Hello, World!");
+    return EXIT_SUCCESS;
+}\end{lstlisting}
+\end{singlespacing}
+
+\end{document}

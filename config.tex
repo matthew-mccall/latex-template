@@ -1,0 +1,31 @@
+\widowpenalty10000 % prevent widow and orphan lines
+\clubpenalty10000
+
+\setmainfont{LibertinusSerif}[
+    Path            = fonts/Libertinus_Serif/,
+    UprightFont     = *-Regular,
+    ItalicFont      = *-Italic,
+    BoldFont        = *-Bold,
+    BoldItalicFont  = *-BoldItalic]
+
+\setmonofont{JetBrainsMono}[
+    Scale           = MatchLowercase,
+    Path            = fonts/JetBrains_Mono/static/,
+    UprightFont     = *-Regular,
+    ItalicFont      = *-Italic,
+    BoldFont        = *-Bold,
+    BoldItalicFont  = *-BoldItalic]
+
+\pgfplotsset{compat=1.18, grid=both, axis lines=middle}
+\lstset{basicstyle=\ttfamily,columns=fullflexible,breaklines=true,frame=shadowbox,keepspaces}
+
+\newcommand{\nth}{^{\text{th}}}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\implies}{\rightarrow}
+
+\usetikzlibrary{arrows,automata,shapes}
+
+\input{dot.tex}
+\input{kicad.tex}
+\input{puml.tex}
