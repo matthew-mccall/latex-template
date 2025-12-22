@@ -19,8 +19,9 @@ DIR=$(dirname -- "$BASENAME")
 BASE=$(basename -- "$BASENAME")
 
 SCH="$DIR/$BASE.kicad_sch"
-SVG="$DIR/$BASE.svg"
-PDF="$DIR/$BASE.pdf"
+OUT_DIR="out/$DIR"
+SVG="$OUT_DIR/$BASE.svg"
+PDF="$OUT_DIR/$BASE.pdf"
 
 log "Started at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 log "PWD: $(pwd)"
@@ -49,9 +50,13 @@ else
   log "inkscape not found in PATH"
 fi
 
+# Create output directory if it doesn't exist
+mkdir -p "$OUT_DIR"
+
 log "Initial directory listings"
 lsdir "$(pwd)"
 lsdir "$DIR"
+lsdir "$OUT_DIR"
 
 # Stage: export SVG from schematic
 if [ -e "$SCH" ]; then
@@ -59,7 +64,7 @@ if [ -e "$SCH" ]; then
   if [ ! -e "$SVG" ] || [ "$SCH" -nt "$SVG" ]; then
     log "Generating SVG via kicad-cli..."
     lsdir "$DIR"
-    kicad-cli sch export svg --exclude-drawing-sheet --black-and-white --output "$DIR" "$SCH"
+    kicad-cli sch export svg --exclude-drawing-sheet --black-and-white --output "$OUT_DIR" "$SCH"
     rc=$?
     log "kicad-cli exit code: $rc"
     lsdir "$DIR"

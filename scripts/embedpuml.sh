@@ -19,8 +19,9 @@ DIR=$(dirname -- "$BASENAME")
 BASE=$(basename -- "$BASENAME")
 
 PUML="$DIR/$BASE.puml"
-SVG="$DIR/$BASE.svg"
-PDF="$DIR/$BASE.pdf"
+OUT_DIR="out/$DIR"
+SVG="$OUT_DIR/$BASE.svg"
+PDF="$OUT_DIR/$BASE.pdf"
 
 log "Started at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 log "PWD: $(pwd)"
@@ -49,17 +50,23 @@ else
   log "inkscape not found in PATH"
 fi
 
+# Create output directory if it doesn't exist
+mkdir -p "$OUT_DIR"
+
 log "Initial directory listings"
 lsdir "$(pwd)"
 lsdir "$DIR"
+lsdir "$OUT_DIR"
 
 # Stage: export SVG from PUML
 if [ -e "$PUML" ]; then
   log "PUML exists: $PUML"
   if [ ! -e "$SVG" ] || [ "$PUML" -nt "$SVG" ]; then
     log "Generating SVG via plantuml..."
-    # plantuml -tsvg creates SVG in the same directory as PUML by default
+    # plantuml -tsvg creates SVG in the same directory as PUML by default, so we need to move it
     plantuml -tsvg "$PUML"
+    # Move the generated SVG to the output directory
+    mv "$DIR/$BASE.svg" "$SVG"
     rc=$?
     log "plantuml exit code: $rc"
     lsdir "$DIR"
