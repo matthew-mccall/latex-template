@@ -1,20 +1,30 @@
 \widowpenalty10000 % prevent widow and orphan lines
 \clubpenalty10000
 
+\defaultfontfeatures{
+    Ligatures = TeX,
+    Scale = MatchLowercase,
+}
+
 \setmainfont{LibertinusSerif}[
-    Path            = fonts/Libertinus_Serif/,
+    Path            = fonts/Libertinus/,
+    Extension       = .otf,
     UprightFont     = *-Regular,
     ItalicFont      = *-Italic,
     BoldFont        = *-Bold,
     BoldItalicFont  = *-BoldItalic]
 
 \setmonofont{JetBrainsMono}[
-    Scale           = MatchLowercase,
+    % Scale           = MatchLowercase,
     Path            = fonts/JetBrains_Mono/static/,
     UprightFont     = *-Regular,
     ItalicFont      = *-Italic,
     BoldFont        = *-Bold,
     BoldItalicFont  = *-BoldItalic]
+
+\setmathfont{LibertinusMath-Regular}[
+    Path            = fonts/Libertinus/,
+    Extension       = .otf]
 
 \pgfplotsset{compat=1.18, grid=both, axis lines=middle}
 \lstset{basicstyle=\ttfamily,columns=fullflexible,breaklines=true,frame=shadowbox,keepspaces}
