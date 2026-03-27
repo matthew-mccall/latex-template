@@ -13,7 +13,6 @@
 \usepackage{fontspec}
 \usepackage{unicode-math}
 \usepackage{graphicx}
-\usepackage{lipsum}
 \usepackage{listings}
 \usepackage{pgfplots} % graph functions
 \usepackage{setspace}
@@ -23,7 +22,7 @@
 
 \input{config.tex}
 
-\title{Homework 0 \\ \large Course Name \\ Section 0}
+\title{Assignment Name \\ \large Course Name \\ Section Number}
 \author{Matthew McCall}
 
 \begin{document}
@@ -32,14 +31,33 @@
 \doublespacing{}
 
 \section{Hello World!}
-\lipsum
+This template is a Lua\LaTeX-first article setup that ships with OpenType Libertinus text fonts and a full OpenType math font (via \lstinline|unicode-math|), so Lua\LaTeX can use modern math glyphs and features out of the box. It also includes \emph{batteries-included} diagram embedding for Graphviz DOT (\lstinline|\embeddot|), PlantUML (\lstinline|\embedpuml|), and KiCad schematics (\lstinline|\embedkicad|): small Lua helpers rebuild outputs only when sources change and cache the generated PDFs under \lstinline|out/| for fast reruns. To use all integrations, install \lstinline|lualatex| (a TeX distribution), \lstinline|latexmk|, and \lstinline|inkscape|; for specific generators you’ll also need \lstinline|dot| (Graphviz), \lstinline|plantuml| (and Java), and \lstinline|kicad-cli|. Shell-escape must be enabled for the external tool calls (see \lstinline|.latexmkrc|).
 
 \section{Graph}
-\embeddot{graphs/example}
+The document embeds externally generated diagrams via the Lua helpers; \lstinline|dot| produces the source SVG, Inkscape converts it to PDF, and the LaTeX macro simply renders the finalized file. The width percent you pass to \lstinline|\embeddot| is interpreted relative to \lstinline|\linewidth|, so the figure flexibly scales without touching the Lua scripts.
+
+\begin{figure}[htbp]
+  \centering
+  \embeddot{graphs/example}
+  \caption{Graphviz output from \lstinline|graphs/example.dot| produced through the shared Lua builder and displayed in the document.}
+\end{figure}
+
+The surrounding paragraph keeps the figure grounded and explains how the macro resolves the \lstinline|.dot| file stored beside the source.
+
+\section{Embedding Pipeline}
+The same shared builder drives each integration: it detects stale PDFs, runs the appropriate CLI (PlantUML for the workflow diagram, \lstinline|dot| for graphs, etc.), and returns the resulting path so the TeX macro can include it.
+
+\begin{figure}[h]
+  \centering
+  \embedpuml[0.55]{graphs/embed_workflow}
+  \caption{The Lua helper orchestrates CLI invocation and converts PlantUML output into a PDF ready for \LaTeX.}
+\end{figure}
 
 \section{Code Example}
+The listing below showcases the JetBrains Mono font by compiling a minimal \lstinline|Hello, World!| C program. It is centered and captioned to keep the documentation consistent with the other figures.
+
 \begin{singlespacing}
-    \begin{lstlisting}
+    \begin{lstlisting}[language=C, caption={Minimal C program demonstrating the embedded code listing font.}]
 #include <stdio.h>
 #include <stdlib.h>
 

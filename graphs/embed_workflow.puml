@@ -1,0 +1,22 @@
+@startuml
+
+actor Author
+participant "LaTeX macro\n(\\embedpuml{basename})" as TeX
+participant "Lua module\nscripts.embedpuml" as Lua
+participant "Shared builder\n(embed_utils.make_builder)" as Builder
+participant "PlantUML CLI" as PlantUML
+participant "Inkscape" as Inkscape
+participant "out/<dir>/<base>.pdf" as PDF
+
+Author -> TeX: Writes command in .tex
+TeX -> Lua: directlua calls build(basename)
+Lua -> Builder: build(basename)
+Builder -> Builder: ensure output dir\ncheck timestamps
+Builder -> PlantUML: plantuml -tsvg ...\n(if .puml newer)
+PlantUML --> Builder: out/<dir>/<base>.svg
+Builder -> Inkscape: convert svg -> pdf\n(if svg newer)
+Inkscape --> PDF: write updated PDF
+Builder --> TeX: return pdf path
+TeX -> TeX: \\includegraphics{...}
+
+@enduml
